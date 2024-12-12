@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 class PegawaiController extends GetxController {
   //TODO: Implement DosenController
   late TextEditingController cNama;
+  late TextEditingController cNip;
   late TextEditingController cJabatan;
   late TextEditingController cAlamat;
   late TextEditingController cJeniskelamin;
@@ -22,13 +23,14 @@ class PegawaiController extends GetxController {
     return pegawai.snapshots();
   }
 
-  void add(
-      String nama, String jabatan, String alamat, String jeniskelamin) async {
+  void add(String nama, String nip, String jabatan, String alamat,
+      String jeniskelamin) async {
     CollectionReference pegawai = firestore.collection("pegawai");
 
     try {
       await pegawai.add({
         "nama": nama,
+        "nip": nip,
         "jabatan": jabatan,
         "alamat": alamat,
         "jeniskelamin": jeniskelamin,
@@ -38,6 +40,7 @@ class PegawaiController extends GetxController {
           middleText: "Berhasil menyimpan data Pegawai",
           onConfirm: () {
             cNama.clear();
+            cNip.clear();
             cJabatan.clear();
             cAlamat.clear();
             cJeniskelamin.clear();
@@ -60,13 +63,14 @@ class PegawaiController extends GetxController {
     return docRef.get();
   }
 
-  void Update(String nama, String jabatan, String alamat, String jeniskelamin,
-      String id) async {
+  void Update(String nama, String nip, String jabatan, String alamat,
+      String jeniskelamin, String id) async {
     DocumentReference pegawaiById = firestore.collection("pegawai").doc(id);
 
     try {
       await pegawaiById.update({
         "nama": nama,
+        "nip": nip,
         "jabatan": jabatan,
         "alamat": alamat,
         "jeniskelamin": jeniskelamin,
@@ -77,7 +81,10 @@ class PegawaiController extends GetxController {
         middleText: "Berhasil mengubah data Pegawai.",
         onConfirm: () {
           cNama.clear();
+          cNip.clear();
           cJabatan.clear();
+          cAlamat.clear();
+          cJeniskelamin.clear();
           Get.back();
           Get.back();
         },
@@ -123,6 +130,7 @@ class PegawaiController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     cNama = TextEditingController();
+    cNip = TextEditingController();
     cJabatan = TextEditingController();
     cAlamat = TextEditingController();
     cJeniskelamin = TextEditingController();
@@ -133,6 +141,7 @@ class PegawaiController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     cNama.dispose();
+    cNip.dispose();
     cJabatan.dispose();
     cAlamat.dispose();
     cJeniskelamin.dispose();

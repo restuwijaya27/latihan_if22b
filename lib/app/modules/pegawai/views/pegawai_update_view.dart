@@ -44,7 +44,7 @@ class PegawaiUpdateView extends GetView<PegawaiController> {
                   TextField(
                     controller: controller.cJeniskelamin,
                     textInputAction: TextInputAction.done,
-                    decoration: InputDecoration(labelText: "Jenis_kelamin"),
+                    decoration: InputDecoration(labelText: "Jenis kelamin"),
                   ),
                   SizedBox(
                     height: 20,

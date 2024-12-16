@@ -60,13 +60,6 @@ class _DashboardAdminState extends State<DashboardAdmin> {
         backgroundColor: Colors.teal,
         titleSpacing: 0,
         title: Text(_fragment[_index]['title']),
-        actions: [
-          IconButton(
-            onPressed: () => Get.to(_fragment[_index]['add']),
-            icon: Icon(Icons.add_circle_outline),
-          )
-        ],
-
       ),
       body: _fragment[_index]['view'],
     );

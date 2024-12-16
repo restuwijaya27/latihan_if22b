@@ -104,24 +104,53 @@ class PegawaiController extends GetxController {
 
     try {
       Get.defaultDialog(
-        title: "Info",
-        middleText: "Apakah anda yakin menghapus data ini ?",
+        title: "Konfirmasi Hapus",
+        middleText: "Apakah Anda yakin ingin menghapus data pegawai ini?",
         onConfirm: () {
-          docRef.delete();
-          Get.back();
-          Get.defaultDialog(
-            title: "Sukses",
-            middleText: "Berhasil menghapus data",
-          );
+          docRef.delete().then((_) {
+            // Successful deletion
+            Get.back(); // Close the confirmation dialog
+            Get.snackbar(
+              'Sukses',
+              'Data pegawai berhasil dihapus',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.green.shade100,
+              colorText: Colors.green.shade900,
+              duration: Duration(seconds: 3),
+            );
+          }).catchError((error) {
+            // Handle deletion error
+            Get.back(); // Close the confirmation dialog
+            Get.snackbar(
+              'Kesalahan',
+              'Gagal menghapus data: $error',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red.shade100,
+              colorText: Colors.red.shade900,
+              duration: Duration(seconds: 3),
+            );
+          });
         },
-        textConfirm: "Ya",
+        onCancel: () {
+          // Optional: Add any cleanup or additional logic when canceling
+          Get.back();
+        },
+        textConfirm: "Hapus",
         textCancel: "Batal",
+        confirmTextColor: Colors.white,
+        cancelTextColor: Colors.teal.shade900,
+        buttonColor: Colors.red,
       );
     } catch (e) {
-      print(e);
-      Get.defaultDialog(
-        title: "Terjadi kesalahan",
-        middleText: "Tidak berhasil menghapus data",
+      // Catch any unexpected errors during the delete process
+      print('Unexpected error during delete: $e');
+      Get.snackbar(
+        'Kesalahan',
+        'Terjadi kesalahan tidak terduga',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.shade100,
+        colorText: Colors.red.shade900,
+        duration: Duration(seconds: 3),
       );
     }
   }

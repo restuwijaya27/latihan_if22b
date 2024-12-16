@@ -105,7 +105,7 @@ class PegawaiAddView extends GetView<PegawaiController> {
     return ElevatedButton(
       onPressed: () => controller.add(
         controller.cNama.text,
-        controller.cJabatan.text,
+        controller.cNip.text,
         controller.cJabatan.text,
         controller.cJeniskelamin.text,
         controller.cAlamat.text,

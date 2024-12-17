@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class PegawaiController extends GetxController {
   //TODO: Implement DosenController
   late TextEditingController cNama;
-  late TextEditingController cNip;
+  late TextEditingController cNo;
   late TextEditingController cJabatan;
   late TextEditingController cAlamat;
   late TextEditingController cJeniskelamin;
@@ -23,14 +23,14 @@ class PegawaiController extends GetxController {
     return pegawai.snapshots();
   }
 
-  void add(String nama, String nip, String jabatan, String alamat,
+  void add(String nama , String no, String jabatan, String alamat,
       String jeniskelamin) async {
     CollectionReference pegawai = firestore.collection("pegawai");
 
     try {
       await pegawai.add({
         "nama": nama,
-        "nip": nip,
+        "no": no,
         "jabatan": jabatan,
         "alamat": alamat,
         "jeniskelamin": jeniskelamin,
@@ -40,7 +40,7 @@ class PegawaiController extends GetxController {
           middleText: "Berhasil menyimpan data Pegawai",
           onConfirm: () {
             cNama.clear();
-            cNip.clear();
+            cNo.clear();
             cJabatan.clear();
             cAlamat.clear();
             cJeniskelamin.clear();
@@ -63,39 +63,229 @@ class PegawaiController extends GetxController {
     return docRef.get();
   }
 
-  void Update(String nama, String nip, String jabatan, String alamat,
+  void Update(String nama, String no, String jabatan, String alamat,
       String jeniskelamin, String id) async {
     DocumentReference pegawaiById = firestore.collection("pegawai").doc(id);
 
     try {
+      // Show loading dialog
+      Get.dialog(
+        Center(
+          child: Container(
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.deepPurple.withOpacity(0.3),
+                  blurRadius: 10,
+                  spreadRadius: 5,
+                )
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(
+                  color: Colors.deepPurple,
+                ),
+                SizedBox(height: 5),
+                Text(
+                  "Sedang Memperbarui Data...",
+                  style: TextStyle(
+                    color: Colors.deepPurple,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        barrierDismissible: false,
+      );
+
+      // Perform update
       await pegawaiById.update({
         "nama": nama,
-        "nip": nip,
+        "no": no,
         "jabatan": jabatan,
         "alamat": alamat,
         "jeniskelamin": jeniskelamin,
       });
 
-      Get.defaultDialog(
-        title: "Berhasil",
-        middleText: "Berhasil mengubah data Pegawai.",
-        onConfirm: () {
-          cNama.clear();
-          cNip.clear();
-          cJabatan.clear();
-          cAlamat.clear();
-          cJeniskelamin.clear();
-          Get.back();
-          Get.back();
-        },
-        textConfirm: "OK",
+      // Close loading dialog
+      Get.back();
+
+      // Show success dialog
+      Get.dialog(
+        Center(
+          child: Container(
+            width: Get.width * 0.8,
+            padding: EdgeInsets.all(25),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.deepPurple[400]!,
+                  Colors.deepPurple[600]!,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 20,
+                  spreadRadius: 5,
+                )
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.check_circle_outline,
+                  color: Colors.white,
+                  size: 80,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "Berhasil",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "Data Pegawai berhasil diperbarui.",
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 25),
+                ElevatedButton(
+                  onPressed: () {
+                    // Clear controllers
+                    cNama.clear();
+                    cNo.clear();
+                    cJabatan.clear();
+                    cAlamat.clear();
+                    cJeniskelamin.clear();
+                    
+                    // Navigate back twice
+                    Get.back();
+                    Get.back();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.deepPurple,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 40, 
+                      vertical: 12
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  child: Text(
+                    "OK",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        barrierDismissible: false,
       );
     } catch (e) {
-      print(e);
-      Get.defaultDialog(
-        title: "Terjadi Kesalahan",
-        middleText: "Gagal Menambahkan Pegawai.",
+      // Close any existing dialogs
+      Get.back();
+
+      // Show error dialog
+      Get.dialog(
+        Center(
+          child: Container(
+            width: Get.width * 0.8,
+            padding: EdgeInsets.all(25),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.red.withOpacity(0.3),
+                  blurRadius: 20,
+                  spreadRadius: 5,
+                )
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.error_outline,
+                  color: Colors.red,
+                  size: 80,
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "Kesalahan",
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "Gagal memperbarui data Pegawai. Silakan coba lagi.",
+                  style: TextStyle(
+                    color: Colors.black87,
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 25),
+                ElevatedButton(
+                  onPressed: () => Get.back(),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 40, 
+                      vertical: 12
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  child: Text(
+                    "Tutup",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        barrierDismissible: false,
       );
+
+      // Log the error
+      print("Error updating pegawai: $e");
     }
   }
 
@@ -159,7 +349,7 @@ class PegawaiController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     cNama = TextEditingController();
-    cNip = TextEditingController();
+    cNo = TextEditingController();
     cJabatan = TextEditingController();
     cAlamat = TextEditingController();
     cJeniskelamin = TextEditingController();
@@ -170,7 +360,7 @@ class PegawaiController extends GetxController {
   void onClose() {
     // TODO: implement onClose
     cNama.dispose();
-    cNip.dispose();
+    cNo.dispose();
     cJabatan.dispose();
     cAlamat.dispose();
     cJeniskelamin.dispose();

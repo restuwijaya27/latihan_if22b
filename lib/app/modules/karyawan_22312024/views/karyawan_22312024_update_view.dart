@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/app/modules/pegawai/controllers/pegawai_controller.dart';
+import 'package:myapp/app/modules/karyawan_22312024/controllers/karyawan_22312024_controller.dart';
 
-class PegawaiUpdateView extends GetView<PegawaiController> {
-  const PegawaiUpdateView({Key? key}) : super(key: key);
+class karyawan_22312024UpdateView extends GetView<karyawan_22312024Controller> {
+  const karyawan_22312024UpdateView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +30,9 @@ class PegawaiUpdateView extends GetView<PegawaiController> {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       var data = snapshot.data!.data() as Map<String, dynamic>;
-                      controller.cNama.text = data['nama'];
-                      controller.cNo.text = data['no'];
-                      controller.cJabatan.text = data['jabatan'];
-                      controller.cAlamat.text = data['alamat'];
-                      controller.cJeniskelamin.text = data['jeniskelamin'];
+                      controller.cNama_karyawan.text = data['nama_karyawan'];
+                      controller.cNo_karyawan.text = data['no_karyawan'];
+                      controller.cJabatan_karyawan.text = data['jabatan_karyawan'];
                       
                       return SingleChildScrollView(
                         child: Padding(
@@ -50,7 +48,7 @@ class PegawaiUpdateView extends GetView<PegawaiController> {
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   Text(
-                                    'Ubah Data Pegawai',
+                                    'Ubah Data Karyawan',
                                     style: TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.w700,
@@ -61,33 +59,21 @@ class PegawaiUpdateView extends GetView<PegawaiController> {
                                   ),
                                   const SizedBox(height: 25),
                                   _buildTextField(
-                                    controller: controller.cNo,
-                                    labelText: "NO",
+                                    controller: controller.cNo_karyawan,
+                                    labelText: "NO Karyawan",
                                     icon: Icons.badge_outlined,
                                   ),
                                   const SizedBox(height: 15),
                                   _buildTextField(
-                                    controller: controller.cNama,
-                                    labelText: "Nama",
+                                    controller: controller.cNama_karyawan,
+                                    labelText: "Nama Karyawan",
                                     icon: Icons.person_outline,
                                   ),
                                   const SizedBox(height: 15),
                                   _buildTextField(
-                                    controller: controller.cJabatan,
-                                    labelText: "Jabatan",
+                                    controller: controller.cJabatan_karyawan,
+                                    labelText: "Jabatan Karyawan",
                                     icon: Icons.work_outline,
-                                  ),
-                                  const SizedBox(height: 15),
-                                  _buildTextField(
-                                    controller: controller.cAlamat,
-                                    labelText: "Alamat",
-                                    icon: Icons.location_on_outlined,
-                                  ),
-                                  const SizedBox(height: 15),
-                                  _buildTextField(
-                                    controller: controller.cJeniskelamin,
-                                    labelText: "Jenis Kelamin",
-                                    icon: Icons.people_outline,
                                   ),
                                   const SizedBox(height: 30),
                                   _buildUpdateButton(context),
@@ -123,7 +109,7 @@ class PegawaiUpdateView extends GetView<PegawaiController> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Ubah Pegawai',
+          'Ubah Karyawan',
           style: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 20,
@@ -188,11 +174,9 @@ class PegawaiUpdateView extends GetView<PegawaiController> {
   Widget _buildUpdateButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () => controller.Update(
-        controller.cNama.text,
-        controller.cNo.text,
-        controller.cJabatan.text,
-        controller.cAlamat.text,
-        controller.cJeniskelamin.text,
+        controller.cNama_karyawan.text,
+        controller.cNo_karyawan.text,
+        controller.cJabatan_karyawan.text,
         Get.arguments,
       ),
       style: ElevatedButton.styleFrom(

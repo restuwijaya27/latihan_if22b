@@ -5,8 +5,8 @@ import 'package:myapp/app/modules/dosen/views/dosen_add_view.dart';
 import 'package:myapp/app/modules/dosen/views/dosen_view.dart';
 import 'package:myapp/app/modules/mahasiswa/views/mahasiswa_add_view.dart';
 import 'package:myapp/app/modules/mahasiswa/views/mahasiswa_view.dart';
-import 'package:myapp/app/modules/pegawai/views/pegawai_add_view.dart';
-import 'package:myapp/app/modules/pegawai/views/pegawai_view.dart';
+import 'package:myapp/app/modules/karyawan_22312024/views/karyawan_22312024_add_view.dart';
+import 'package:myapp/app/modules/karyawan_22312024/views/karyawan_22312024_view.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -51,10 +51,10 @@ class _DashboardAdminState extends State<DashboardAdmin> {
       'color': Color(0xFF27AE60), // Emerald Green
     },
     {
-      'title': 'Data Pegawai',
+      'title': 'Data Karyawan_22312024',
       'icon': Icons.work_outline,
-      'view': PegawaiView(),
-      'add': () => PegawaiAddView(),
+      'view': karyawan_22312024View(),
+      'add': () => karyawan_22312024AddView(),
       'color': Color(0xFF6A11CB), // Golden Orange
     },
   ];

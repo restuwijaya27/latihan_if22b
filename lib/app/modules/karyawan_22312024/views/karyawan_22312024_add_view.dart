@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/app/modules/pegawai/controllers/pegawai_controller.dart';
+import 'package:myapp/app/modules/karyawan_22312024/controllers/karyawan_22312024_controller.dart';
 
-class PegawaiAddView extends GetView<PegawaiController> {
-  const PegawaiAddView({Key? key}) : super(key: key);
+class karyawan_22312024AddView extends GetView<karyawan_22312024Controller> {
+  const karyawan_22312024AddView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class PegawaiAddView extends GetView<PegawaiController> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Text(
-                              'Tambah Data Pegawai',
+                              'Tambah Data Karyawan',
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w700,
@@ -49,37 +49,23 @@ class PegawaiAddView extends GetView<PegawaiController> {
                             ),
                             const SizedBox(height: 25),
                             _buildTextField(
-                              controller: controller.cNo,
-                              label: "NO",
+                              controller: controller.cNo_karyawan,
+                              label: "NO_Karyawan",
                               icon: Icons.badge_outlined,
                               textInputAction: TextInputAction.next,
                             ),
                             const SizedBox(height: 15),
                             _buildTextField(
-                              controller: controller.cNama,
+                              controller: controller.cNama_karyawan,
                               label: "Nama Lengkap",
                               icon: Icons.person_outline,
                               textInputAction: TextInputAction.next,
                             ),
                             const SizedBox(height: 15),
                             _buildTextField(
-                              controller: controller.cJabatan,
+                              controller: controller.cJabatan_karyawan,
                               label: "Jabatan",
                               icon: Icons.work_outline,
-                              textInputAction: TextInputAction.next,
-                            ),
-                            const SizedBox(height: 15),
-                            _buildTextField(
-                              controller: controller.cAlamat,
-                              label: "Alamat",
-                              icon: Icons.location_on_outlined,
-                              textInputAction: TextInputAction.next,
-                            ),
-                            const SizedBox(height: 15),
-                            _buildTextField(
-                              controller: controller.cJeniskelamin,
-                              label: "Jenis Kelamin",
-                              icon: Icons.people_outline,
                               textInputAction: TextInputAction.done,
                             ),
                             const SizedBox(height: 30),
@@ -106,7 +92,7 @@ class PegawaiAddView extends GetView<PegawaiController> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Tambah Pegawai',
+          'Tambah Karyawan',
           style: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: 20,
@@ -176,11 +162,9 @@ class PegawaiAddView extends GetView<PegawaiController> {
   Widget _buildSaveButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () => controller.add(
-        controller.cNama.text,
-        controller.cNo.text,
-        controller.cJabatan.text,
-        controller.cJeniskelamin.text,
-        controller.cAlamat.text,
+        controller.cNama_karyawan.text,
+        controller.cNo_karyawan.text,
+        controller.cJabatan_karyawan.text,
       ),
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.deepPurple[600],

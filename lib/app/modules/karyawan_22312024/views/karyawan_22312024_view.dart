@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:myapp/app/modules/pegawai/views/pegawai_add_view.dart';
-import 'package:myapp/app/modules/pegawai/views/pegawai_update_view.dart';
-import '../controllers/pegawai_controller.dart';
+import 'package:myapp/app/modules/karyawan_22312024/views/karyawan_22312024_add_view.dart';
+import 'package:myapp/app/modules/karyawan_22312024/views/karyawan_22312024_update_view.dart';
+import '../controllers/karyawan_22312024_controller.dart';
 
-class PegawaiView extends GetView<PegawaiController> {
+class karyawan_22312024View extends GetView<karyawan_22312024Controller> {
   void _showDetailBottomSheet(Map<String, dynamic> data) {
     showModalBottomSheet(
       context: Get.context!,
@@ -37,16 +37,14 @@ class PegawaiView extends GetView<PegawaiController> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 3),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 10,
-                      offset: Offset(0, 5)
-                    )
-                  ]
-                ),
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 3),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          offset: Offset(0, 5))
+                    ]),
                 child: CircleAvatar(
                   radius: 50,
                   backgroundColor: Colors.white,
@@ -59,7 +57,7 @@ class PegawaiView extends GetView<PegawaiController> {
               ),
               SizedBox(height: 20),
               Text(
-                data["nama"],
+                data["nama_karyawan"],
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -68,16 +66,15 @@ class PegawaiView extends GetView<PegawaiController> {
               ),
               SizedBox(height: 10),
               Text(
-                "No ${data["no"]}",
+                "No Karyawan ${data["no_karyawan"]}",
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white70,
                 ),
               ),
               SizedBox(height: 10),
-              _buildDetailRow("Jabatan", data["jabatan"] ?? "N/A"),
-              _buildDetailRow("Alamat", data["alamat"] ?? "N/A"),
-              _buildDetailRow("Jenis Kelamin", data["jeniskelamin"] ?? "N/A"),
+              _buildDetailRow(
+                  "Jabatan Karyawan", data["jabatan_karyawan"] ?? "N/A"),
               SizedBox(height: 20),
             ],
           ),
@@ -109,7 +106,7 @@ class PegawaiView extends GetView<PegawaiController> {
       ),
     );
   }
-  
+
   void _showEnhancedOptionsDialog(String id) {
     showDialog(
       context: Get.context!,
@@ -135,22 +132,22 @@ class PegawaiView extends GetView<PegawaiController> {
               onTap: () {
                 Get.back();
                 Get.to(
-                  PegawaiUpdateView(),
+                  karyawan_22312024UpdateView(),
                   arguments: id,
                   transition: Transition.rightToLeft,
                 );
               },
             ),
-             SizedBox(height: 20),
+            SizedBox(height: 20),
             _buildAnimatedActionButton(
-                icon: Icons.delete,
-                label: 'Delete',
-                color: Colors.redAccent,
-                onTap: () {
-                  Get.back();
-                  controller.delete(id);
-                },
-              ),
+              icon: Icons.delete,
+              label: 'Delete',
+              color: Colors.redAccent,
+              onTap: () {
+                Get.back();
+                controller.delete(id);
+              },
+            ),
           ],
         ),
         actions: [
@@ -205,7 +202,7 @@ class PegawaiView extends GetView<PegawaiController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<QuerySnapshot<Object?>>(
-        stream: Get.put(PegawaiController()).streamData(),
+        stream: Get.put(karyawan_22312024Controller()).streamData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             var listAllDocs = snapshot.data?.docs ?? [];
@@ -225,14 +222,14 @@ class PegawaiView extends GetView<PegawaiController> {
                   child: listAllDocs.isNotEmpty
                       ? ListView.builder(
                           padding: EdgeInsets.only(
-                            top: 16, 
-                            bottom: 100, // Space for the floating button
-                            left: 16, 
-                            right: 16
-                          ),
+                              top: 16,
+                              bottom: 100, // Space for the floating button
+                              left: 16,
+                              right: 16),
                           itemCount: listAllDocs.length,
                           itemBuilder: (context, index) {
-                            var data = listAllDocs[index].data() as Map<String, dynamic>;
+                            var data = listAllDocs[index].data()
+                                as Map<String, dynamic>;
                             return Padding(
                               padding: const EdgeInsets.symmetric(vertical: 8),
                               child: GestureDetector(
@@ -243,7 +240,8 @@ class PegawaiView extends GetView<PegawaiController> {
                                     borderRadius: BorderRadius.circular(20),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Color(0xFF6A11CB).withOpacity(0.2),
+                                        color:
+                                            Color(0xFF6A11CB).withOpacity(0.2),
                                         spreadRadius: 2,
                                         blurRadius: 10,
                                         offset: Offset(0, 4),
@@ -274,7 +272,8 @@ class PegawaiView extends GetView<PegawaiController> {
                                         borderRadius: BorderRadius.circular(15),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Color(0xFF6A11CB).withOpacity(0.5),
+                                            color: Color(0xFF6A11CB)
+                                                .withOpacity(0.5),
                                             blurRadius: 6,
                                             spreadRadius: 1,
                                           ),
@@ -292,7 +291,7 @@ class PegawaiView extends GetView<PegawaiController> {
                                       ),
                                     ),
                                     title: Text(
-                                      "${data["nama"]}",
+                                      "${data["nama_karyawan"]}",
                                       style: TextStyle(
                                         color: Color(0xFF6A11CB),
                                         fontWeight: FontWeight.w700,
@@ -300,14 +299,16 @@ class PegawaiView extends GetView<PegawaiController> {
                                       ),
                                     ),
                                     subtitle: Text(
-                                      "${data["no"]}",
+                                      "${data["no_karyawan"]}",
                                       style: TextStyle(
                                         color: Color(0xFF2575FC),
                                         fontSize: 15,
                                       ),
                                     ),
                                     trailing: IconButton(
-                                      onPressed: () => _showEnhancedOptionsDialog(listAllDocs[index].id),
+                                      onPressed: () =>
+                                          _showEnhancedOptionsDialog(
+                                              listAllDocs[index].id),
                                       icon: Icon(
                                         Icons.more_vert,
                                         color: Color(0xFF6A11CB),
@@ -331,7 +332,7 @@ class PegawaiView extends GetView<PegawaiController> {
                               ),
                               SizedBox(height: 25),
                               Text(
-                                "Tidak Ada Data Pegawai",
+                                "Tidak Ada Data Karyawan",
                                 style: TextStyle(
                                   color: Color(0xFF6A11CB),
                                   fontSize: 24,
@@ -341,7 +342,7 @@ class PegawaiView extends GetView<PegawaiController> {
                               ),
                               SizedBox(height: 15),
                               Text(
-                                "Silakan tambahkan pegawai baru",
+                                "Silakan tambahkan karyawan baru",
                                 style: TextStyle(
                                   color: Color(0xFF2575FC),
                                   fontSize: 18,
@@ -352,7 +353,7 @@ class PegawaiView extends GetView<PegawaiController> {
                           ),
                         ),
                 ),
-                
+
                 // Floating Add Button
                 Positioned(
                   bottom: 20,
@@ -362,15 +363,13 @@ class PegawaiView extends GetView<PegawaiController> {
                     child: GestureDetector(
                       onTap: () {
                         Get.to(
-                          PegawaiAddView(),
+                          karyawan_22312024AddView(),
                           transition: Transition.cupertino,
                         );
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 40, 
-                          vertical: 15
-                        ),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -400,7 +399,7 @@ class PegawaiView extends GetView<PegawaiController> {
                             ),
                             SizedBox(width: 10),
                             Text(
-                              'Tambah Pegawai',
+                              'Tambah Karyawan',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,

@@ -8,8 +8,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/mahasiswa/bindings/mahasiswa_binding.dart';
 import '../modules/mahasiswa/views/mahasiswa_view.dart';
-import '../modules/pegawai/bindings/pegawai_binding.dart';
-import '../modules/pegawai/views/pegawai_view.dart';
+import '../modules/karyawan_22312024/bindings/karyawan_22312024_binding.dart';
+import '../modules/karyawan_22312024/views/karyawan_22312024_view.dart';
 import '../modules/reset_password/bindings/reset_password_binding.dart';
 import '../modules/reset_password/views/reset_password_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
@@ -55,8 +55,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PEGAWAI,
-      page: () => PegawaiView(),
-      binding: PegawaiBinding(),
+      page: () => karyawan_22312024View(),
+      binding: karyawan_22312024Binding(),
     ),
   ];
 }

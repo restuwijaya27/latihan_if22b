@@ -2,48 +2,43 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class PegawaiController extends GetxController {
+class karyawan_22312024Controller extends GetxController {
   //TODO: Implement DosenController
-  late TextEditingController cNama;
-  late TextEditingController cNo;
-  late TextEditingController cJabatan;
+  late TextEditingController cNo_karyawan;
+  late TextEditingController cNama_karyawan;
+  late TextEditingController cJabatan_karyawan;
   late TextEditingController cAlamat;
   late TextEditingController cJeniskelamin;
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<QuerySnapshot<Object?>> GetData() async {
-    CollectionReference pegawai = firestore.collection('pegawai');
+    CollectionReference karyawan_22312024 = firestore.collection('karyawan_22312024');
 
-    return pegawai.get();
+    return karyawan_22312024.get();
   }
 
   Stream<QuerySnapshot<Object?>> streamData() {
-    CollectionReference pegawai = firestore.collection('pegawai');
-    return pegawai.snapshots();
+    CollectionReference karyawan_22312024 = firestore.collection('karyawan_22312024');
+    return karyawan_22312024.snapshots();
   }
 
-  void add(String nama , String no, String jabatan, String alamat,
-      String jeniskelamin) async {
-    CollectionReference pegawai = firestore.collection("pegawai");
+  void add(String nama_karyawan , String no_karyawan, String jabatan_karyawan) async {
+    CollectionReference karyawan_22312024 = firestore.collection("karyawan_22312024");
 
     try {
-      await pegawai.add({
-        "nama": nama,
-        "no": no,
-        "jabatan": jabatan,
-        "alamat": alamat,
-        "jeniskelamin": jeniskelamin,
+      await karyawan_22312024.add({
+        "nama_karyawan": nama_karyawan,
+        "no_karyawan": no_karyawan,
+        "jabatan_karyawan": jabatan_karyawan,
       });
       Get.defaultDialog(
           title: "Berhasil",
-          middleText: "Berhasil menyimpan data Pegawai",
+          middleText: "Berhasil menyimpan data Karyawan",
           onConfirm: () {
-            cNama.clear();
-            cNo.clear();
-            cJabatan.clear();
-            cAlamat.clear();
-            cJeniskelamin.clear();
+            cNama_karyawan.clear();
+            cNo_karyawan.clear();
+            cJabatan_karyawan.clear();
             Get.back();
             Get.back();
             "OK";
@@ -52,20 +47,19 @@ class PegawaiController extends GetxController {
       print(e);
       Get.defaultDialog(
         title: "Terjadi Kesalahan",
-        middleText: "Gagal Menambahkan Pegawai.",
+        middleText: "Gagal Menambahkan Karyawan.",
       );
     }
   }
 
   Future<DocumentSnapshot<Object?>> GetDataById(String id) async {
-    DocumentReference docRef = firestore.collection("pegawai").doc(id);
+    DocumentReference docRef = firestore.collection("karyawan_22312024").doc(id);
 
     return docRef.get();
   }
 
-  void Update(String nama, String no, String jabatan, String alamat,
-      String jeniskelamin, String id) async {
-    DocumentReference pegawaiById = firestore.collection("pegawai").doc(id);
+  void Update(String nama_karyawan, String no_karyawan, String jabatan_karyawan, String id) async {
+    DocumentReference karyawan_22312024ById = firestore.collection("karyawan_22312024").doc(id);
 
     try {
       // Show loading dialog
@@ -106,12 +100,10 @@ class PegawaiController extends GetxController {
       );
 
       // Perform update
-      await pegawaiById.update({
-        "nama": nama,
-        "no": no,
-        "jabatan": jabatan,
-        "alamat": alamat,
-        "jeniskelamin": jeniskelamin,
+      await karyawan_22312024ById.update({
+        "nama_karyawan": nama_karyawan,
+        "no_karyawan": no_karyawan,
+        "jabatan_karyawan": jabatan_karyawan,
       });
 
       // Close loading dialog
@@ -161,7 +153,7 @@ class PegawaiController extends GetxController {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "Data Pegawai berhasil diperbarui.",
+                  "Data Karyawan berhasil diperbarui.",
                   style: TextStyle(
                     color: Colors.white70,
                     fontSize: 16,
@@ -172,11 +164,9 @@ class PegawaiController extends GetxController {
                 ElevatedButton(
                   onPressed: () {
                     // Clear controllers
-                    cNama.clear();
-                    cNo.clear();
-                    cJabatan.clear();
-                    cAlamat.clear();
-                    cJeniskelamin.clear();
+                    cNama_karyawan.clear();
+                    cNo_karyawan.clear();
+                    cJabatan_karyawan.clear();
                     
                     // Navigate back twice
                     Get.back();
@@ -248,7 +238,7 @@ class PegawaiController extends GetxController {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "Gagal memperbarui data Pegawai. Silakan coba lagi.",
+                  "Gagal memperbarui data Karyawan. Silakan coba lagi.",
                   style: TextStyle(
                     color: Colors.black87,
                     fontSize: 16,
@@ -285,24 +275,24 @@ class PegawaiController extends GetxController {
       );
 
       // Log the error
-      print("Error updating pegawai: $e");
+      print("Error updating Karyawan: $e");
     }
   }
 
   void delete(String id) {
-    DocumentReference docRef = firestore.collection("pegawai").doc(id);
+    DocumentReference docRef = firestore.collection("karyawan_22312024").doc(id);
 
     try {
       Get.defaultDialog(
         title: "Konfirmasi Hapus",
-        middleText: "Apakah Anda yakin ingin menghapus data pegawai ini?",
+        middleText: "Apakah Anda yakin ingin menghapus data Karyawan ini?",
         onConfirm: () {
           docRef.delete().then((_) {
             // Successful deletion
             Get.back(); // Close the confirmation dialog
             Get.snackbar(
               'Sukses',
-              'Data pegawai berhasil dihapus',
+              'Data Karyawan berhasil dihapus',
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.green.shade100,
               colorText: Colors.green.shade900,
@@ -348,22 +338,18 @@ class PegawaiController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-    cNama = TextEditingController();
-    cNo = TextEditingController();
-    cJabatan = TextEditingController();
-    cAlamat = TextEditingController();
-    cJeniskelamin = TextEditingController();
+    cNama_karyawan = TextEditingController();
+    cNo_karyawan = TextEditingController();
+    cJabatan_karyawan = TextEditingController();
     super.onInit();
   }
 
   @override
   void onClose() {
     // TODO: implement onClose
-    cNama.dispose();
-    cNo.dispose();
-    cJabatan.dispose();
-    cAlamat.dispose();
-    cJeniskelamin.dispose();
+    cNama_karyawan.dispose();
+    cNo_karyawan.dispose();
+    cJabatan_karyawan.dispose();
     super.onClose();
   }
 }
